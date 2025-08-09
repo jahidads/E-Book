@@ -1012,47 +1012,6 @@
             transform: translateY(0);
         }
 
-        .reading-progress {
-            height: 6px;
-            background-color: transparent;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            width: 100%;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            width: 0%;
-            transition: width 0.4s ease;
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: var(--card-bg);
-            color: var(--dark);
-            padding: 1.2rem 1.8rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-hover);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 2000;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.5s ease;
-            border-left: 5px solid var(--accent);
-        }
-
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
         /* Background Canvas */
         #bg-canvas {
             position: fixed;
@@ -1392,77 +1351,6 @@
 </head>
 <body>
     <canvas id="bg-canvas"></canvas>
-    <!-- Reading Progress Bar -->
-    <div class="reading-progress">
-        <div class="progress-bar" id="progressBar"></div>
-    </div>
-
-    <!-- Toast Notification -->
-    <div class="toast" id="toast">
-        <i class="fas fa-check-circle"></i>
-        <span id="toastMessage">Item added to your library</span>
-    </div>
-
-    <!-- Reading Mode -->
-    <div class="reading-mode" id="readingMode">
-        <div class="reading-header">
-            <h3>Full Stack Development with Node & React</h3>
-            <div>
-                <button class="btn btn-outline" id="closeReading">
-                    <i class="fas fa-times"></i> Close
-                </button>
-            </div>
-        </div>
-        <div class="reading-content">
-            <h2>Chapter 1: Introduction to Full Stack Development</h2>
-            <p>Full-stack development refers to the development of both front-end and back-end portions of an application. This book will guide you through building modern web applications using React for the frontend and Node.js for the backend.</p>
-            
-            <p>In today's web development landscape, JavaScript has become the universal language for both client-side and server-side programming. This allows developers to use a single language throughout their stack, increasing efficiency and reducing context switching.</p>
-            
-            <h3>Why React and Node.js?</h3>
-            <p>React has emerged as the most popular frontend library due to its component-based architecture, virtual DOM, and rich ecosystem. Node.js, on the other hand, provides a JavaScript runtime for building scalable server-side applications.</p>
-            
-            <p>When combined, these technologies allow for:</p>
-            <ul>
-                <li>Consistent language across the stack</li>
-                <li>Code sharing between client and server</li>
-                <li>Rich ecosystem of libraries and tools</li>
-                <li>High performance for real-time applications</li>
-                <li>Strong community support</li>
-            </ul>
-            
-            <h3>Setting Up Your Development Environment</h3>
-            <p>Before we dive into building applications, let's set up our development environment. You'll need:</p>
-            <ol>
-                <li>Node.js (version 14 or higher)</li>
-                <li>npm (comes with Node.js) or yarn</li>
-                <li>A code editor (VS Code recommended)</li>
-                <li>Git for version control</li>
-            </ol>
-            
-            <p>To create a new React application, we'll use Create React App:</p>
-            <pre>npx create-react-app my-app
-cd my-app
-npm start</pre>
-            
-            <p>For the backend, we'll initialize a new Node.js project:</p>
-            <pre>mkdir server
-cd server
-npm init -y
-npm install express</pre>
-        </div>
-        <div class="reading-controls">
-            <button class="btn btn-icon">
-                <i class="fas fa-font"></i>
-            </button>
-            <button class="btn btn-icon">
-                <i class="fas fa-cog"></i>
-            </button>
-        </div>
-        <div class="progress-container">
-            <div class="progress-bar-reading"></div>
-        </div>
-    </div>
 
     <!-- Header -->
     <header>
@@ -1514,11 +1402,11 @@ npm install express</pre>
                 <h1 class="fade-in">Advance Your Coding Skills with Premium E-Books</h1>
                 <p class="fade-in">Access 3000+ programming books, courses, and resources curated for modern developers. Learn at your own pace with our expert collection.</p>
                 <div class="hero-buttons fade-in">
-                    <button class="btn btn-primary" id="exploreBtn">
+                    <button class="btn btn-primary" id="exploreBtn" onclick="window.open('https://www.w3schools.com/', '_blank')">
                         <i class="fas fa-book-open"></i>
                         Explore Library
                     </button>
-                    <button class="btn btn-outline" style="background: rgba(255,255,255,0.1); color: var(--light); border-color: rgba(255,255,255,0.3);">
+                    <button class="btn btn-outline" style="color: rgb(255, 255, 255);" onclick="window.open('https://jahidads.github.io/BookHub/', '_blank')">
                         <i class="fas fa-graduation-cap"></i>
                         Start Learning
                     </button>
@@ -1621,7 +1509,7 @@ npm install express</pre>
                             </div>
                             <div class="book-price">$34.99</div>
                         </div>
-                        <button class="btn btn-outline" style="width: 100%; margin-top: 1rem;" onclick="openReadingMode()">
+                        <button class="btn btn-outline" style="width: 100%; margin-top: 1rem;"  onclick="window.open('https://jahidads.github.io/WorkHub/', '_blank')">
                             <i class="fas fa-book-open"></i> Read Sample
                         </button>
                     </div>
@@ -1661,7 +1549,7 @@ npm install express</pre>
                             </div>
                             <div class="book-price">$39.99</div>
                         </div>
-                        <button class="btn btn-outline" style="width: 100%; margin-top: 1rem;" onclick="openReadingMode()">
+                        <button class="btn btn-outline" style="width: 100%; margin-top: 1rem;"  onclick="window.open('https://jahidads.github.io/WorkHub/', '_blank')">
                             <i class="fas fa-book-open"></i> Read Sample
                         </button>
                     </div>
@@ -1701,7 +1589,7 @@ npm install express</pre>
                             </div>
                             <div class="book-price" style="color: var(--accent);">Free</div>
                         </div>
-                        <button class="btn btn-outline" style="width: 100%; margin-top: 1rem;" onclick="openReadingMode()">
+                        <button class="btn btn-outline" style="width: 100%; margin-top: 1rem;"  onclick="window.open('https://jahidads.github.io/WorkHub/', '_blank')">
                             <i class="fas fa-book-open"></i> Read Sample
                         </button>
                     </div>
@@ -1738,7 +1626,7 @@ npm install express</pre>
                             </div>
                             <div class="book-price">$29.99</div>
                         </div>
-                        <button class="btn btn-outline" style="width: 100%; margin-top: 1rem;" onclick="openReadingMode()">
+                        <button class="btn btn-outline" style="width: 100%; margin-top: 1rem;"  onclick="window.open('https://jahidads.github.io/WorkHub/', '_blank')">
                             <i class="fas fa-book-open"></i> Read Sample
                         </button>
                     </div>
@@ -1778,7 +1666,7 @@ npm install express</pre>
                     
                     <div class="hero-buttons">
                         <!-- Removed Buy Now button -->
-                        <button class="btn btn-outline" style="border-color: white; color: white;" onclick="openReadingMode()">
+                        <button class="btn btn-outline" style="border-color: white; color: white;"  onclick="window.open('https://jahidads.github.io/WorkHub/', '_blank')">
                             <i class="fas fa-book-open"></i>
                             Read Sample
                         </button>
@@ -1862,14 +1750,42 @@ npm install express</pre>
                     <h3>React Masters Club</h3>
                     <p>Join us as we explore advanced React patterns and state management techniques. Currently reading "Advanced React Patterns" by Alex Smith.</p>
                     <div class="club-members">
-                        <div class="member-avatar">JD</div>
-                        <div class="member-avatar">AM</div>
-                        <div class="member-avatar">SK</div>
+                        <div class="member-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="JD" style="width:100%;height:100%;border-radius:50%;">
+                        </div>
+                        <div class="member-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="AM" style="width:100%;height:100%;border-radius:50%;">
+                        </div>
+                        <div class="member-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/65.jpg" alt="SK" style="width:100%;height:100%;border-radius:50%;">
+                        </div>
                         <div class="member-avatar">+12</div>
                     </div>
                 </div>
             </div>
-            
+
+            <div class="book-club-card">
+                <div class="club-cover">
+                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Club Book">
+                </div>
+                <div class="club-info">
+                    <h3>Web Development Enthusiasts</h3>
+                    <p>A community for web developers to share resources, discuss trends, and collaborate on projects. We meet bi-weekly online.</p>
+                    <div class="club-members">
+                        <div class="member-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="MH" style="width:100%;height:100%;border-radius:50%;">
+                        </div>
+                        <div class="member-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="TS" style="width:100%;height:100%;border-radius:50%;">
+                        </div>
+                        <div class="member-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="AB" style="width:100%;height:100%;border-radius:50%;">
+                        </div>
+                        <div class="member-avatar">+5</div>
+                    </div>
+                </div>
+            </div>
+
             <div class="book-club-card">
                 <div class="club-cover">
                     <img src="https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Club Book">
@@ -1878,9 +1794,59 @@ npm install express</pre>
                     <h3>JavaScript Fundamentals</h3>
                     <p>A group for developers mastering modern JavaScript. We meet weekly to discuss concepts and solve challenges together.</p>
                     <div class="club-members">
-                        <div class="member-avatar">JD</div>
-                        <div class="member-avatar">TP</div>
-                        <div class="member-avatar">LR</div>
+                        <div class="member-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="JD" style="width:100%;height:100%;border-radius:50%;">
+                        </div>
+                        <div class="member-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="TP" style="width:100%;height:100%;border-radius:50%;">
+                        </div>
+                        <div class="member-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/65.jpg" alt="LR" style="width:100%;height:100%;border-radius:50%;">
+                        </div>
+                        <div class="member-avatar">+18</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="book-club-card">
+                <div class="club-cover">
+                    <img src="https://cdn.pixabay.com/photo/2018/05/26/19/16/programming-3432058_640.jpg" alt="Club Book">
+                </div>
+                <div class="club-info">
+                    <h3>Python Fundamentals</h3>
+                    <p>A group for developers mastering modern Python. We meet weekly to discuss concepts and solve challenges together.</p>
+                    <div class="club-members">
+                        <div class="member-avatar">
+                            <img src="https://cdn.pixabay.com/photo/2022/01/28/10/26/man-6974298_640.jpg" alt="JD" style="width:100%;height:100%;border-radius:50%;">
+                        </div>
+                        <div class="member-avatar">
+                            <img src="https://cdn.pixabay.com/photo/2017/09/11/05/32/suit-2737910_640.jpg" alt="TP" style="width:100%;height:100%;border-radius:50%;">
+                        </div>
+                        <div class="member-avatar">
+                            <img src="https://cdn.pixabay.com/photo/2017/05/19/12/38/entrepreneur-2326419_640.jpg" alt="LR" style="width:100%;height:100%;border-radius:50%;">
+                        </div>
+                        <div class="member-avatar">+14</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="book-club-card">
+                <div class="club-cover">
+                    <img src="https://cdn.pixabay.com/photo/2023/10/10/05/53/laptop-8305452_640.jpg" alt="Club Book">
+                </div>
+                <div class="club-info">
+                    <h3>CSS Fundamentals</h3>
+                    <p>A group for developers mastering modern CSS. We meet weekly to discuss concepts and solve challenges together.</p>
+                    <div class="club-members">
+                        <div class="member-avatar">
+                            <img src="https://cdn.pixabay.com/photo/2023/01/14/12/45/software-7718110_640.jpg" alt="JD" style="width:100%;height:100%;border-radius:50%;">
+                        </div>
+                        <div class="member-avatar">
+                            <img src="https://cdn.pixabay.com/photo/2024/07/16/12/58/ai-generated-8899270_640.jpg" alt="TP" style="width:100%;height:100%;border-radius:50%;">
+                        </div>
+                        <div class="member-avatar">
+                            <img src="https://cdn.pixabay.com/photo/2018/10/16/17/26/the-internet-3751984_640.jpg" alt="LR" style="width:100%;height:100%;border-radius:50%;">
+                        </div></div>
                         <div class="member-avatar">+8</div>
                     </div>
                 </div>
@@ -1911,49 +1877,49 @@ npm install express</pre>
                     <h4>E-Book</h4>
                     <p>Your ultimate resource for web development learning materials. Quality e-books for developers at all skill levels.</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-github"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="https://x.com/jahidhasan_tw"><i class="fab fa-twitter"></i></a>
+                        <a href="https://github.com/jahidads"><i class="fab fa-github"></i></a>
+                        <a href="https://bd.linkedin.com/in/jahidads"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.facebook.com/jahidads1"><i class="fab fa-facebook"></i></a>
                     </div>
                 </div>
                 
                 <div class="footer-col">
                     <h4>Explore</h4>
                     <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Home</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Library</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Categories</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> New Releases</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Best Sellers</a></li>
+                        <li><a href="#home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#library"><i class="fas fa-chevron-right"></i> Library</a></li>
+                        <li><a href="#book-clubs"><i class="fas fa-chevron-right"></i> Book-clubs</a></li>
+                        <li><a href="#top-book"><i class="fas fa-chevron-right"></i> Top Book</a></li>
+                        <li><a href="#profile"><i class="fas fa-chevron-right"></i> Best Sellers</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-col">
                     <h4>Resources</h4>
                     <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Developer Blog</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Coding Challenges</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Cheat Sheets</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Free Samples</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Webinars</a></li>
+                        <li><a href="https://jahidads.github.io/Blog/"><i class="fas fa-chevron-right"></i> Developer Blog</a></li>
+                        <li><a href="https://jahidads.github.io/WorkHub/"><i class="fas fa-chevron-right"></i> Coding Challenges</a></li>
+                        <li><a href="https://jahidads.github.io/WorkHub/"><i class="fas fa-chevron-right"></i> Cheat Sheets</a></li>
+                        <li><a href="https://jahidads.github.io/WorkHub/"><i class="fas fa-chevron-right"></i> Free Samples</a></li>
+                        <li><a href="https://jahidads.github.io/Webinars/"><i class="fas fa-chevron-right"></i> Webinars</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-col">
                     <h4>Support</h4>
                     <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Help Center</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Refund Policy</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
+                        <li><a href="https://jahidads.github.io/WorkHub/"><i class="fas fa-chevron-right"></i> Help Center</a></li>
+                        <li><a href="https://jahidads.github.io/WorkHub/"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                        <li><a href="https://jahidads.github.io/WorkHub/"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+                        <li><a href="https://jahidads.github.io/WorkHub/"><i class="fas fa-chevron-right"></i> Refund Policy</a></li>
+                        <li><a href="https://jahidads.github.io/WorkHub/"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
                     </ul>
                 </div>
             </div>
             
             <div class="copyright">
-                &copy; 2023 BookHub. All rights reserved. Made with <i class="fas fa-heart" style="color: var(--secondary);"></i> for developers
+                &copy; 2025 E-Book. Made by <i class="fas fa-heart" style="color: var(--secondary);"></i> Jahid developer
             </div>
         </div>
     </footer>
@@ -1968,40 +1934,15 @@ npm install express</pre>
                 '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
         });
 
-        // Reading Progress Bar
-        window.addEventListener('scroll', () => {
-            const scrollTop = document.documentElement.scrollTop;
-            const scrollHeight = document.documentElement.scrollHeight;
-            const clientHeight = document.documentElement.clientHeight;
-            const scrollPercentage = (scrollTop / (scrollHeight - clientHeight)) * 100;
-            document.getElementById('progressBar').style.width = scrollPercentage + '%';
-        });
-
         // Category Selection
         const categories = document.querySelectorAll('.category');
         categories.forEach(category => {
             category.addEventListener('click', () => {
                 categories.forEach(cat => cat.classList.remove('active'));
                 category.classList.add('active');
-                showToast(`Showing ${category.textContent.trim()} books`);
             });
         });
-
-        // Toast notification function
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            const toastMessage = document.getElementById('toastMessage');
-            
-            toastMessage.textContent = message;
-            toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
         
-        // Removed add to cart functionality
-
         // Explore button animation
         const exploreBtn = document.getElementById('exploreBtn');
         exploreBtn.addEventListener('click', () => {
@@ -2029,34 +1970,12 @@ npm install express</pre>
             observer.observe(element);
         });
         
-        // Reading Mode Functions
-        function openReadingMode() {
-            document.getElementById('readingMode').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        
-        document.getElementById('closeReading').addEventListener('click', () => {
-            document.getElementById('readingMode').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        });
-        
         // Simulate user login
         const userBtn = document.getElementById('userBtn');
         userBtn.addEventListener('click', () => {
             showToast('Profile page opened');
         });
         
-        // Initialize reading mode progress
-        const readingProgress = document.querySelector('.progress-bar-reading');
-        let readingProgressValue = 35;
-        
-        setInterval(() => {
-            if (readingProgressValue < 100) {
-                readingProgressValue += 0.5;
-                readingProgress.style.width = readingProgressValue + '%';
-            }
-        }, 3000);
-
         // Animated Background Canvas (Enhanced)
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
