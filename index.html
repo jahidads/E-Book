@@ -1,0 +1,2152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookHub - Advanced E-Book Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #436d85;
+            --primary-dark: #000000;
+            --secondary: #ffb703;
+            --accent: #fb8500;
+            --dark: #22223b;
+            --light: #000000;
+            --gray: #78818a;
+            --light-gray: #ffffff;
+            --card-bg: #ffffff;
+            --header-bg: rgba(216, 216, 216, 0.97);
+            --shadow: 0 4px 18px rgba(0, 0, 0, 0.07);
+            --shadow-hover: 0 8px 28px rgba(0, 0, 0, 0.13);
+            --transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+            --border-radius: 14px;
+            --glass-bg: rgba(0, 0, 0, 0.92);
+            --code-bg: #22223b;
+            --reading-bg: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #133546 0%, #5d6d7e70 100%);
+            color: var(--light);
+            line-height: 1.7;
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        /* Header Styles */
+        header {
+            margin: 18px 24px 0 24px;
+            padding: 0 18px;
+            transition: var(--transition);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 2.2rem;
+            color: var(--accent);
+            transition: transform 0.6s ease;
+        }
+
+        .logo:hover i {
+            transform: rotate(15deg) scale(1.1);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            background: rgba(67, 109, 133, 0.08);
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            box-shadow: 0 2px 8px rgba(67, 109, 133, 0.06);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--primary-dark);
+            font-weight: 600;
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            position: relative;
+            transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+            font-size: 1.1rem;
+            letter-spacing: 0.02em;
+        }
+
+        nav a.active,
+        nav a:hover {
+            background: linear-gradient(90deg, var(--primary) 60%, var(--accent) 100%);
+            color: #fff !important;
+            box-shadow: 0 4px 16px rgba(67, 109, 133, 0.13);
+        }
+
+        nav a::after {
+            display: none;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.9rem 1.8rem;
+            border-radius: var(--border-radius);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-size: 1.05rem;
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            box-shadow: 0 6px 12px rgba(67, 97, 238, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.35);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-accent {
+            background: linear-gradient(135deg, var(--accent) 0%, #05b990 100%);
+            color: white;
+            box-shadow: 0 6px 12px rgba(6, 214, 160, 0.25);
+        }
+
+        .btn-accent:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(6, 214, 160, 0.35);
+        }
+
+        .btn-icon {
+            padding: 0.8rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            position: relative;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.4rem 0.9rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-new {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+
+        .badge-popular {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .badge-free {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .theme-toggle {
+            display: none; /* Hide theme toggle button */
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 7rem 0 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -150px;
+            right: -150px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(67, 97, 238, 0.18) 0%, rgba(67, 97, 238, 0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            max-width: 700px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            color: var(--gray);
+            max-width: 650px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1.2rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .stat::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            height: 40px;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+            border-radius: 4px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+
+        /* Categories Section */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2.3rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 6px;
+        }
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
+        .category {
+            background-color: var(--light-gray);
+            padding: 1rem 1.8rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.1rem;
+            border: 2px solid transparent;
+        }
+
+        .category i {
+            font-size: 1.3rem;
+        }
+
+        .category:hover, .category.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary);
+        }
+
+        /* Books Grid */
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .book-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            transform: translateY(0);
+            border: 1px solid var(--light-gray);
+        }
+
+        .book-card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
+        }
+
+        .book-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 2;
+        }
+
+        .book-cover {
+            height: 340px;
+            background: linear-gradient(135deg, #e0e7ff 0%, #d1d8f0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .book-cover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(0,0,0,0.1) 100%);
+        }
+
+        .book-cover img {
+            width: 70%;
+            height: auto;
+            object-fit: cover;
+            transition: var(--transition);
+            filter: drop-shadow(0 12px 20px rgba(0,0,0,0.25));
+        }
+
+        .book-card:hover .book-cover img {
+            transform: scale(1.08);
+        }
+
+        .book-info {
+            padding: 1.8rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .book-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.7rem;
+            color: var(--dark);
+            font-weight: 700;
+        }
+
+        .book-author {
+            color: var(--gray);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .book-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: auto;
+            align-items: center;
+        }
+
+        .book-rating {
+            color: #f59e0b;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .book-rating span {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+
+        .book-price {
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 1.3rem;
+        }
+
+        .book-meta-info {
+            display: flex;
+            gap: 1.5rem;
+            margin: 1rem 0;
+            font-size: 1rem;
+            color: var(--gray);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Featured Section */
+        .featured-section {
+            background: linear-gradient(135deg, var(--primary) 0%, #3a0ca3 100%);
+            border-radius: var(--border-radius);
+            padding: 4rem;
+            margin: 5rem 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-section::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+        }
+
+        .featured-book {
+            display: flex;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .featured-cover {
+            flex: 0 0 320px;
+            height: 420px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 25px 40px rgba(0,0,0,0.35);
+            transition: transform 0.6s ease;
+            position: relative;
+        }
+
+        .featured-cover:hover {
+            transform: rotate(2deg) scale(1.03);
+        }
+
+        .featured-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .featured-content {
+            flex: 1;
+        }
+
+        .featured-badge {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--dark);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(6, 214, 160, 0.3);
+        }
+
+        .featured-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.2rem;
+            line-height: 1.2;
+        }
+
+        .featured-author {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .featured-description {
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.9);
+            max-width: 700px;
+            font-size: 1.1rem;
+        }
+
+        .featured-stats {
+            display: flex;
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .featured-stat {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .featured-stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        .featured-stat-label {
+            color: rgba(255,255,255,0.8);
+            font-size: 1rem;
+        }
+
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .feature-card {
+            background-color: var(--card-bg);
+            padding: 2.8rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid var(--light-gray);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.6s ease;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 1.8rem;
+            transition: transform 0.6s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        /* Reading Mode */
+        .reading-mode {
+            background-color: var(--reading-bg);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+        }
+
+        .reading-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background-color: var(--header-bg);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+        }
+
+        .reading-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .reading-content h2 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .reading-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background-color: var(--header-bg);
+        }
+
+        .progress-container {
+            width: 100%;
+            max-width: 600px;
+            background-color: var(--light-gray);
+            border-radius: 10px;
+            height: 8px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .progress-bar-reading {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 10px;
+            width: 35%;
+        }
+
+        /* User Profile */
+        .profile-section {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 3rem;
+            margin: 3rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 1.5rem;
+        }
+
+        .profile-stat {
+            text-align: center;
+        }
+
+        .profile-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .profile-stat-label {
+            color: var(--gray);
+        }
+
+        .badges-container {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .badge-item {
+            background-color: var(--light-gray);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .badge-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        /* Book Club */
+        .book-club-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .club-cover {
+            flex: 0 0 120px;
+            height: 160px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .club-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .club-info {
+            flex: 1;
+        }
+
+        .club-members {
+            display: flex;
+            margin-top: 1rem;
+        }
+
+        .member-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: -10px;
+            border: 2px solid var(--card-bg);
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(135deg, var(--accent) 0%, #05b990 100%);
+            border-radius: var(--border-radius);
+            padding: 5rem;
+            text-align: center;
+            margin: 5rem 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+        }
+
+        .newsletter-content {
+            position: relative;
+            z-index: 1;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .newsletter h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .newsletter p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+            gap: 1.5rem;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1.2rem 1.8rem;
+            border-radius: 50px;
+            border: none;
+            font-size: 1.1rem;
+            outline: none;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 6rem 0 3rem;
+            margin-top: 5rem;
+            position: relative;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-col h4 {
+            color: white;
+            margin-bottom: 2rem;
+            font-size: 1.4rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 3px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 1.2rem;
+        }
+
+        .footer-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.2rem;
+            margin-top: 2rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: var(--transition);
+            font-size: 1.3rem;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #adb5bd;
+            font-size: 1rem;
+        }
+
+        /* UI/UX Elements */
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reading-progress {
+            height: 6px;
+            background-color: transparent;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            width: 100%;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--card-bg);
+            color: var(--dark);
+            padding: 1.2rem 1.8rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-hover);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 2000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.5s ease;
+            border-left: 5px solid var(--accent);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Background Canvas */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            background: transparent;
+        }
+        body > *:not(#bg-canvas) {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .featured-book {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .featured-cover {
+                flex: 0 0 auto;
+                width: 100%;
+                max-width: 320px;
+                margin-bottom: 3rem;
+            }
+            
+            .featured-stats {
+                justify-content: center;
+            }
+            
+            .featured-author {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.6rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 90px;
+                left: 0;
+                background-color: var(--header-bg);
+                backdrop-filter: blur(12px);
+                width: 100%;
+                padding: 2.5rem;
+                box-shadow: var(--shadow);
+                flex-direction: column;
+                align-items: center;
+                transform: translateY(-150%);
+                transition: var(--transition);
+                gap: 1.5rem;
+            }
+            
+            .nav-menu.active {
+                transform: translateY(0);
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .featured-section {
+                padding: 3rem;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.5rem;
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-stats {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .hero-buttons .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .books-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-stats {
+                gap: 2rem;
+            }
+            
+            .categories {
+                justify-content: center;
+            }
+            
+            .newsletter {
+                padding: 3rem 1.5rem;
+            }
+
+            .btn, .dropdown-toggle {
+        font-size: 1.15rem;
+        padding: 1.2rem 2rem;
+    }
+        }
+
+        @media (max-width: 400px) {
+    .container, .section, .featured-section, .newsletter {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+    .reading-content {
+        padding: 0.5rem;
+    }
+}
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 101;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-toggle {
+            background: none;
+            border: none;
+            color: var(--primary-dark);
+            font-weight: 600;
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.25s, color 0.25s;
+        }
+        .dropdown-toggle:focus {
+            outline: none;
+            background: rgba(67, 109, 133, 0.08);
+        }
+        .dropdown-menu {
+            display: none;
+            position: static;
+            background: rgba(67, 109, 133, 0.08);
+            border-radius: 18px;
+            margin-top: 0.5rem;
+            padding: 0.5rem 0;
+            box-shadow: 0 2px 8px rgba(67, 109, 133, 0.06);
+            list-style: none;
+            flex-direction: column;
+            min-width: 180px;
+        }
+        .dropdown-menu li a {
+            color: var(--primary-dark);
+            padding: 0.7rem 1.5rem;
+            display: block;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background 0.2s, color 0.2s;
+        }
+        .dropdown-menu li a:hover {
+            background: linear-gradient(90deg, var(--primary) 60%, var(--accent) 100%);
+            color: #fff;
+        }
+        .dropdown.open .dropdown-menu {
+            display: flex;
+        }
+        @media (max-width: 768px) {
+            .dropdown-menu {
+                position: static;
+                width: 100%;
+                box-shadow: none;
+                margin-top: 0.5rem;
+            }
+        }
+
+        /* Make Reading Mode popup more mobile-friendly */
+        @media (max-width: 600px) {
+    .reading-mode {
+        border-radius: 0;
+        width: 100vw;
+        height: 100vh;
+        max-width: 100vw;
+        padding: 0;
+    }
+    .reading-header,
+    .reading-controls {
+        padding: 1rem;
+    }
+    .reading-content {
+        padding: 1rem;
+        font-size: 1rem;
+    }
+}
+
+/* Improve dropdown touch area and spacing on mobile */
+@media (max-width: 768px) {
+    .dropdown-toggle {
+        width: 100%;
+        justify-content: space-between;
+        font-size: 1.15rem;
+        padding: 1rem 1.2rem;
+    }
+    .dropdown-menu {
+        min-width: 100vw;
+        left: 0;
+        border-radius: 0 0 18px 18px;
+        margin-top: 0;
+        padding: 0.5rem 0;
+    }
+    .dropdown-menu li a {
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+    }
+}
+
+/* Make book cards stack and fill width on small screens */
+@media (max-width: 576px) {
+    .books-grid {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+    }
+    .book-card {
+        min-width: 0;
+        width: 100%;
+    }
+    .book-cover {
+        height: 220px;
+    }
+    .book-info {
+        padding: 1rem;
+    }
+}
+
+/* Make featured section and newsletter more compact on mobile */
+@media (max-width: 600px) {
+    .featured-section {
+        padding: 1.2rem;
+    }
+    .featured-title {
+        font-size: 1.5rem;
+    }
+    .featured-description {
+        font-size: 1rem;
+    }
+    .newsletter {
+        padding: 1.2rem;
+    }
+    .newsletter h2 {
+        font-size: 1.3rem;
+    }
+    .newsletter p {
+        font-size: 1rem;
+    }
+}
+
+/* Footer grid stacks on mobile */
+@media (max-width: 600px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    .footer-col {
+        margin-bottom: 2rem;
+    }
+}
+
+/* Make header fixed and add body padding for mobile nav */
+@media (max-width: 768px) {
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        margin: 0;
+        z-index: 1000;
+    }
+    body {
+        padding-top: 90px;
+    }
+}
+
+/* Hide dropdown arrow on desktop, show on mobile */
+@media (min-width: 769px) {
+    .dropdown-toggle i {
+        display: none;
+    }
+}
+@media (max-width: 768px) {
+    .dropdown-toggle i {
+        display: inline-block;
+    }
+}
+    </style>
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+    <!-- Reading Progress Bar -->
+    <div class="reading-progress">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Item added to your library</span>
+    </div>
+
+    <!-- Reading Mode -->
+    <div class="reading-mode" id="readingMode">
+        <div class="reading-header">
+            <h3>Full Stack Development with Node & React</h3>
+            <div>
+                <button class="btn btn-outline" id="closeReading">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+        <div class="reading-content">
+            <h2>Chapter 1: Introduction to Full Stack Development</h2>
+            <p>Full-stack development refers to the development of both front-end and back-end portions of an application. This book will guide you through building modern web applications using React for the frontend and Node.js for the backend.</p>
+            
+            <p>In today's web development landscape, JavaScript has become the universal language for both client-side and server-side programming. This allows developers to use a single language throughout their stack, increasing efficiency and reducing context switching.</p>
+            
+            <h3>Why React and Node.js?</h3>
+            <p>React has emerged as the most popular frontend library due to its component-based architecture, virtual DOM, and rich ecosystem. Node.js, on the other hand, provides a JavaScript runtime for building scalable server-side applications.</p>
+            
+            <p>When combined, these technologies allow for:</p>
+            <ul>
+                <li>Consistent language across the stack</li>
+                <li>Code sharing between client and server</li>
+                <li>Rich ecosystem of libraries and tools</li>
+                <li>High performance for real-time applications</li>
+                <li>Strong community support</li>
+            </ul>
+            
+            <h3>Setting Up Your Development Environment</h3>
+            <p>Before we dive into building applications, let's set up our development environment. You'll need:</p>
+            <ol>
+                <li>Node.js (version 14 or higher)</li>
+                <li>npm (comes with Node.js) or yarn</li>
+                <li>A code editor (VS Code recommended)</li>
+                <li>Git for version control</li>
+            </ol>
+            
+            <p>To create a new React application, we'll use Create React App:</p>
+            <pre>npx create-react-app my-app
+cd my-app
+npm start</pre>
+            
+            <p>For the backend, we'll initialize a new Node.js project:</p>
+            <pre>mkdir server
+cd server
+npm init -y
+npm install express</pre>
+        </div>
+        <div class="reading-controls">
+            <button class="btn btn-icon">
+                <i class="fas fa-font"></i>
+            </button>
+            <button class="btn btn-icon">
+                <i class="fas fa-cog"></i>
+            </button>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar-reading"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#home" class="logo">
+                <i class="fas fa-laptop-code floating"></i>
+                <span>E-Book</span>
+            </a>
+
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <nav>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#library">Library</a></li>
+                    <li class="dropdown">
+                        <button class="dropdown-toggle" id="dropdownToggle">
+                            Book Clubs <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <ul class="dropdown-menu" id="dropdownMenu">
+                            <li><a href="#book-clubs">React Masters Club</a></li>
+                            <li><a href="#book-clubs">JavaScript Fundamentals</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#top-book">Top Book</a></li>
+                    <li><a href="#footer">more</a></li>
+                </ul>
+            </nav>
+            <div class="nav-actions">
+                <button class="btn btn-outline" id="userBtn">
+                    <a href="#profile" class="user-profile">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                </button>
+                <button class="theme-toggle" id="themeToggle" style="display:none;">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="fade-in">Advance Your Coding Skills with Premium E-Books</h1>
+                <p class="fade-in">Access 3000+ programming books, courses, and resources curated for modern developers. Learn at your own pace with our expert collection.</p>
+                <div class="hero-buttons fade-in">
+                    <button class="btn btn-primary" id="exploreBtn">
+                        <i class="fas fa-book-open"></i>
+                        Explore Library
+                    </button>
+                    <button class="btn btn-outline" style="background: rgba(255,255,255,0.1); color: var(--light); border-color: rgba(255,255,255,0.3);">
+                        <i class="fas fa-graduation-cap"></i>
+                        Start Learning
+                    </button>
+                </div>
+                
+                <div class="hero-stats fade-in">
+                    <div class="stat">
+                        <span class="stat-number">3,000+</span>
+                        <span class="stat-label">E-Books</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">700+</span>
+                        <span class="stat-label">Expert Authors</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">98%</span>
+                        <span class="stat-label">Satisfaction Rate</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container" id="library">
+        <!-- Categories Section -->
+        <section class="section">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Browse by Category</h2>
+            </div>
+
+            <div class="categories">
+                <div class="category active fade-in">
+                    <i class="fas fa-star"></i>
+                    All Books
+                </div>
+                <div class="category fade-in">
+                    <i class="fab fa-js"></i>
+                    JavaScript
+                </div>
+                <div class="category fade-in">
+                    <i class="fab fa-react"></i>
+                    React
+                </div>
+                <div class="category fade-in">
+                    <i class="fab fa-node-js"></i>
+                    Node.js
+                </div>
+                <div class="category fade-in">
+                    <i class="fab fa-vuejs"></i>
+                    Vue.js
+                </div>
+                <div class="category fade-in">
+                    <i class="fab fa-python"></i>
+                    Python
+                </div>
+                <div class="category fade-in">
+                    <i class="fas fa-database"></i>
+                    Databases
+                </div>
+                <div class="category fade-in">
+                    <i class="fas fa-cloud"></i>
+                    DevOps
+                </div>
+            </div>
+
+            <!-- Books Grid -->
+            <div class="books-grid">
+                <!-- Book 1 -->
+                <div class="book-card fade-in">
+                    <div class="book-badge">
+                        <span class="badge badge-new">NEW</span>
+                    </div>
+                    <div class="book-cover">
+                        <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Modern JavaScript">
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Modern JavaScript Development</h3>
+                        <p class="book-author">By Sarah Johnson</p>
+                        
+                        <div class="book-meta-info">
+                            <div class="meta-item">
+                                <i class="fas fa-book-open"></i>
+                                320 pages
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-layer-group"></i>
+                                Intermediate
+                            </div>
+                        </div>
+                        
+                        <div class="book-meta">
+                            <div class="book-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.7</span>
+                            </div>
+                            <div class="book-price">$34.99</div>
+                        </div>
+                        <button class="btn btn-outline" style="width: 100%; margin-top: 1rem;" onclick="openReadingMode()">
+                            <i class="fas fa-book-open"></i> Read Sample
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Book 2 -->
+                <div class="book-card fade-in">
+                    <div class="book-badge">
+                        <span class="badge badge-popular">BESTSELLER</span>
+                    </div>
+                    <div class="book-cover">
+                        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="React in Action">
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">React in Action</h3>
+                        <p class="book-author">By Mark Thomas</p>
+                        
+                        <div class="book-meta-info">
+                            <div class="meta-item">
+                                <i class="fas fa-book-open"></i>
+                                420 pages
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-layer-group"></i>
+                                Advanced
+                            </div>
+                        </div>
+                        
+                        <div class="book-meta">
+                            <div class="book-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>4.9</span>
+                            </div>
+                            <div class="book-price">$39.99</div>
+                        </div>
+                        <button class="btn btn-outline" style="width: 100%; margin-top: 1rem;" onclick="openReadingMode()">
+                            <i class="fas fa-book-open"></i> Read Sample
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Book 3 -->
+                <div class="book-card fade-in">
+                    <div class="book-badge">
+                        <span class="badge badge-free">FREE</span>
+                    </div>
+                    <div class="book-cover">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="CSS Mastery">
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">CSS Mastery Guide</h3>
+                        <p class="book-author">By Alex Chen</p>
+                        
+                        <div class="book-meta-info">
+                            <div class="meta-item">
+                                <i class="fas fa-book-open"></i>
+                                280 pages
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-layer-group"></i>
+                                All Levels
+                            </div>
+                        </div>
+                        
+                        <div class="book-meta">
+                            <div class="book-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.6</span>
+                            </div>
+                            <div class="book-price" style="color: var(--accent);">Free</div>
+                        </div>
+                        <button class="btn btn-outline" style="width: 100%; margin-top: 1rem;" onclick="openReadingMode()">
+                            <i class="fas fa-book-open"></i> Read Sample
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Book 4 -->
+                <div class="book-card fade-in">
+                    <div class="book-cover">
+                        <img src="https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Python Crash Course">
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Python Crash Course</h3>
+                        <p class="book-author">By Eric Matthes</p>
+                        
+                        <div class="book-meta-info">
+                            <div class="meta-item">
+                                <i class="fas fa-book-open"></i>
+                                380 pages
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-layer-group"></i>
+                                Beginner
+                            </div>
+                        </div>
+                        
+                        <div class="book-meta">
+                            <div class="book-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>4.3</span>
+                            </div>
+                            <div class="book-price">$29.99</div>
+                        </div>
+                        <button class="btn btn-outline" style="width: 100%; margin-top: 1rem;" onclick="openReadingMode()">
+                            <i class="fas fa-book-open"></i> Read Sample
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Book -->
+        <section class="featured-section fade-in" id="top-book">
+            <div class="featured-book">
+                <div class="featured-cover">
+                    <img src="https://images.unsplash.com/photo-1495640388908-05fa85288e61?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Featured Book">
+                </div>
+                <div class="featured-content">
+                    <span class="featured-badge">BOOK OF THE MONTH</span>
+                    <h2 class="featured-title">Full Stack Development with Node & React</h2>
+                    <p class="featured-author">
+                        <i class="fas fa-user"></i>
+                        By Jahid Hasan
+                    </p>
+                    <p class="featured-description">Master full-stack JavaScript development with this comprehensive guide. Learn how to build modern web applications using React for the frontend and Node.js for the backend. Includes real-world projects, best practices, and deployment strategies.</p>
+                    
+                    <div class="featured-stats">
+                        <div class="featured-stat">
+                            <span class="featured-stat-number">480</span>
+                            <span class="featured-stat-label">Pages</span>
+                        </div>
+                        <div class="featured-stat">
+                            <span class="featured-stat-number">12</span>
+                            <span class="featured-stat-label">Projects</span>
+                        </div>
+                        <div class="featured-stat">
+                            <span class="featured-stat-number">45</span>
+                            <span class="featured-stat-label">Code Examples</span>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-buttons">
+                        <!-- Removed Buy Now button -->
+                        <button class="btn btn-outline" style="border-color: white; color: white;" onclick="openReadingMode()">
+                            <i class="fas fa-book-open"></i>
+                            Read Sample
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- User Profile Section -->
+        <section class="section fade-in" id="profile">
+            <div class="section-header">
+                <h2 class="section-title">My Profile</h2>
+            </div>
+            
+            <div class="profile-section">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div>
+                        <h2>Jahid Developer</h2>
+                        <p>Frontend Developer | React Specialist</p>
+                        <div class="profile-stats">
+                            <div class="profile-stat">
+                                <div class="profile-stat-value">127</div>
+                                <div class="profile-stat-label">Books Read</div>
+                            </div>
+                            <div class="profile-stat">
+                                <div class="profile-stat-value">24</div>
+                                <div class="profile-stat-label">Achievements</div>
+                            </div>
+                            <div class="profile-stat">
+                                <div class="profile-stat-value">3</div>
+                                <div class="profile-stat-label">Book Clubs</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>My Achievements</h3>
+                <div class="badges-container">
+                    <div class="badge-item">
+                        <div class="badge-icon">
+                            <i class="fas fa-book-reader"></i>
+                        </div>
+                        <div>Bookworm</div>
+                    </div>
+                    <div class="badge-item">
+                        <div class="badge-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div>JavaScript Master</div>
+                    </div>
+                    <div class="badge-item">
+                        <div class="badge-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div>Fast Reader</div>
+                    </div>
+                    <div class="badge-item">
+                        <div class="badge-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div>Club Leader</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Book Clubs Section -->
+        <section class="section fade-in" id="book-clubs">
+            <div class="section-header">
+                <h2 class="section-title">My Book Clubs</h2>
+            </div>
+            
+            <div class="book-club-card">
+                <div class="club-cover">
+                    <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Club Book">
+                </div>
+                <div class="club-info">
+                    <h3>React Masters Club</h3>
+                    <p>Join us as we explore advanced React patterns and state management techniques. Currently reading "Advanced React Patterns" by Alex Smith.</p>
+                    <div class="club-members">
+                        <div class="member-avatar">JD</div>
+                        <div class="member-avatar">AM</div>
+                        <div class="member-avatar">SK</div>
+                        <div class="member-avatar">+12</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="book-club-card">
+                <div class="club-cover">
+                    <img src="https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Club Book">
+                </div>
+                <div class="club-info">
+                    <h3>JavaScript Fundamentals</h3>
+                    <p>A group for developers mastering modern JavaScript. We meet weekly to discuss concepts and solve challenges together.</p>
+                    <div class="club-members">
+                        <div class="member-avatar">JD</div>
+                        <div class="member-avatar">TP</div>
+                        <div class="member-avatar">LR</div>
+                        <div class="member-avatar">+8</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Newsletter -->
+        <section class="newsletter fade-in">
+            <div class="newsletter-content">
+                <h2>Join Our Developer Community</h2>
+                <p>Subscribe to our newsletter and get weekly coding tips, free chapter samples, and exclusive discounts on new releases.</p>
+                
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Your email address">
+                    <button class="btn btn-primary">
+                        Subscribe
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="fade-in" id="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>E-Book</h4>
+                    <p>Your ultimate resource for web development learning materials. Quality e-books for developers at all skill levels.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Explore</h4>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Library</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Categories</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> New Releases</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Best Sellers</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Developer Blog</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Coding Challenges</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Cheat Sheets</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Free Samples</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Webinars</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Help Center</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Refund Policy</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 BookHub. All rights reserved. Made with <i class="fas fa-heart" style="color: var(--secondary);"></i> for developers
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            menuToggle.innerHTML = navMenu.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Reading Progress Bar
+        window.addEventListener('scroll', () => {
+            const scrollTop = document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+            const scrollPercentage = (scrollTop / (scrollHeight - clientHeight)) * 100;
+            document.getElementById('progressBar').style.width = scrollPercentage + '%';
+        });
+
+        // Category Selection
+        const categories = document.querySelectorAll('.category');
+        categories.forEach(category => {
+            category.addEventListener('click', () => {
+                categories.forEach(cat => cat.classList.remove('active'));
+                category.classList.add('active');
+                showToast(`Showing ${category.textContent.trim()} books`);
+            });
+        });
+
+        // Toast notification function
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Removed add to cart functionality
+
+        // Explore button animation
+        const exploreBtn = document.getElementById('exploreBtn');
+        exploreBtn.addEventListener('click', () => {
+            exploreBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+            setTimeout(() => {
+                exploreBtn.innerHTML = '<i class="fas fa-book-open"></i> Explore Library';
+            }, 1500);
+        });
+
+        // Fade-in animation on scroll
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('appear');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        });
+        
+        fadeElements.forEach(element => {
+            observer.observe(element);
+        });
+        
+        // Reading Mode Functions
+        function openReadingMode() {
+            document.getElementById('readingMode').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        document.getElementById('closeReading').addEventListener('click', () => {
+            document.getElementById('readingMode').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Simulate user login
+        const userBtn = document.getElementById('userBtn');
+        userBtn.addEventListener('click', () => {
+            showToast('Profile page opened');
+        });
+        
+        // Initialize reading mode progress
+        const readingProgress = document.querySelector('.progress-bar-reading');
+        let readingProgressValue = 35;
+        
+        setInterval(() => {
+            if (readingProgressValue < 100) {
+                readingProgressValue += 0.5;
+                readingProgress.style.width = readingProgressValue + '%';
+            }
+        }, 3000);
+
+        // Animated Background Canvas (Enhanced)
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        function createParticles() {
+            particles = [];
+            for (let i = 0; i < 70; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    r: Math.random() * 2.5 + 1,
+                    dx: (Math.random() - 0.5) * 0.7,
+                    dy: (Math.random() - 0.5) * 0.7,
+                    baseColor: Math.random() * 360,
+                    color: function(t) {
+                        // Animate hue for glowing effect
+                        return `hsla(${(this.baseColor + t) % 360}, 60%, 60%, 0.35)`;
+                    }
+                });
+            }
+        }
+        createParticles();
+        window.addEventListener('resize', createParticles);
+
+        function animateParticles(time = 0) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw connecting lines
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 100) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = 'rgba(67, 109, 133, 0.13)';
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                        ctx.closePath();
+                    }
+                }
+            }
+
+            // Draw particles
+            for (let p of particles) {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = p.color(time / 10);
+                ctx.shadowColor = "#436d85";
+                ctx.shadowBlur = 15;
+                ctx.fill();
+                ctx.closePath();
+
+                p.x += p.dx;
+                p.y += p.dy;
+
+                // Bounce off edges
+                if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // Dropdown for mobile nav
+        const dropdownToggle = document.getElementById('dropdownToggle');
+        const dropdown = dropdownToggle.parentElement;
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+        dropdownToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdown.classList.toggle('open');
+        });
+
+        // Close dropdown when clicking outside (mobile only)
+        document.addEventListener('click', (e) => {
+            if (!dropdown.contains(e.target)) {
+                dropdown.classList.remove('open');
+            }
+        });
+    </script>
+</body>
+</html>
